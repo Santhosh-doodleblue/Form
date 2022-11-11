@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./home.css";
 function HomePage() {
@@ -10,7 +10,8 @@ function HomePage() {
     date: "",
     age: "",
     description: "",
-    degree: "",
+    degree1: "",
+    degree2: "",
   });
   const [list, setList] = useState([]);
   const [errors, setErrors] = useState({});
@@ -20,67 +21,67 @@ function HomePage() {
     setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
-    console.log(errors);
-  });
-
   const Validation = (formDetails) => {
     let errors = {};
-    debugger;
+    let errValues = Object.keys(formDetails);
+    console.log(errValues);
 
-    if (formDetails.firstName === "") {
-      errors.firstName = "*First Name Cannot be empty";
-      setShow(false);
-    } else {
-      setShow(true);
-    }
-    if (formDetails.lastName === "") {
-      errors.lastName = "*Last Name Cannot be empty";
-      setShow(false);
-    } else {
-      setShow(true);
-    }
+    errValues.map((val) => {
+      if (formDetails[val] === "") {
+        errors[val] = "*This field is required";
+        setShow(false);
+      } else {
+        setShow(true);
+      }
+    });
 
-    if (formDetails.gender === "") {
-      errors.gender = "*Gender is Required";
-      setShow(false);
-    } else {
-      setShow(true);
-    }
+    // if (formDetails.lastName === "") {
+    //   errors.lastName = "*Last Name Cannot be empty";
+    //   setShow(false);
+    // } else {
+    //   setShow(true);
+    // }
 
-    if (formDetails.location === "") {
-      errors.location = "*Location is Required";
-      setShow(false);
-    } else {
-      setShow(true);
-    }
+    // if (formDetails.gender === "") {
+    //   errors.gender = "*Gender is Required";
+    //   setShow(false);
+    // } else {
+    //   setShow(true);
+    // }
 
-    if (formDetails.date === "") {
-      errors.date = "*Birth date cannot be empty";
-      setShow(false);
-    } else {
-      setShow(true);
-    }
-    if (formDetails.age === "") {
-      errors.age = "*Age is Required";
-      setShow(false);
-    } else {
-      setShow(true);
-    }
-    if (formDetails.description === "") {
-      errors.description = "*Description is Required";
-      setShow(false);
-    } else {
-      setShow(true);
-    }
-    if (formDetails.degree === "") {
-      errors.degree = "*Degree is Required";
-      setShow(false);
-    } else {
-      setShow(true);
-    }
+    // if (formDetails.location === "") {
+    //   errors.location = "*Location is Required";
+    //   setShow(false);
+    // } else {
+    //   setShow(true);
+    // }
 
-    console.log(errors);
+    // if (formDetails.date === "") {
+    //   errors.date = "*Birth date cannot be empty";
+    //   setShow(false);
+    // } else {
+    //   setShow(true);
+    // }
+    // if (formDetails.age === "") {
+    //   errors.age = "*Age is Required";
+    //   setShow(false);
+    // } else {
+    //   setShow(true);
+    // }
+    // if (formDetails.description === "") {
+    //   errors.description = "*Description is Required";
+    //   setShow(false);
+    // } else {
+    //   setShow(true);
+    // }
+    // if (formDetails.degree === "") {
+    //   errors.degree = "*Degree is Required";
+    //   setShow(false);
+    // } else {
+    //   setShow(true);
+    // }
+
+    // console.log(errors);
 
     return errors;
   };
@@ -103,22 +104,23 @@ function HomePage() {
       date: "",
       age: "",
       description: "",
-      degree: "",
+      degree1: "",
+      degree2: "",
     });
   };
 
   return (
     <>
       <div className="wrapper">
-        <div className="container text-center">
-          <div className="row">
-            <div className="col-lg-4 col-md-6  text-start  mt-5 ">
+        <div className="container d-flex justify-content-center p-5   text-start">
+          <div className="row w-50 ps-5">
+            <div className=" col-md-8  col-sm-12 ms-5">
               <h1 className="head text-white  ">Signup Form</h1>
-              <form className="form ps-3 mb-4">
+              <form className="form ps-3 mb-4 pe-3">
                 <label className="pt-3">First Name :</label>
                 <br></br>
                 <input
-                  className="mt-2 w-75"
+                  className="mt-2 w-100 "
                   type={"text"}
                   name="firstName"
                   value={formDetails.firstName}
@@ -129,7 +131,7 @@ function HomePage() {
                 <label>Last Name :</label>
                 <br></br>
                 <input
-                  className="mt-2 w-75"
+                  className="mt-2 w-100"
                   type={"text"}
                   name="lastName"
                   value={formDetails.lastName}
@@ -140,7 +142,7 @@ function HomePage() {
                 <label>Gender :</label>
                 <br></br>
                 <input
-                  className="mx-3"
+                  className="mx-4"
                   type={"radio"}
                   name="gender"
                   value={"Male"}
@@ -148,7 +150,7 @@ function HomePage() {
                 />{" "}
                 <label for="Male">Male</label>
                 <input
-                  className="mx-3"
+                  className="mx-4"
                   type={"radio"}
                   name="gender"
                   value={"Female"}
@@ -156,9 +158,9 @@ function HomePage() {
                 />
                 <label for="Female">Female</label>
                 <p className="text-danger">{errors.gender}</p>
-                <label>Location:</label>
+                <label>Location:</label> <br></br>
                 <select
-                  className="mx-2 mt-1 w-50"
+                  className="mt-2 w-100"
                   value={formDetails.location}
                   onChange={onChange}
                   name="location"
@@ -173,7 +175,7 @@ function HomePage() {
                 <label>Date Of Birth :</label>
                 <br></br>
                 <input
-                  className="w-75 mt-2"
+                  className="w-100 mt-2"
                   type={"date"}
                   name="date"
                   value={formDetails.date}
@@ -183,7 +185,7 @@ function HomePage() {
                 <label>Age :</label>
                 <br></br>
                 <input
-                  className="mt-2 w-75"
+                  className="mt-2 w-100"
                   type={"number"}
                   name="age"
                   value={formDetails.age}
@@ -194,7 +196,7 @@ function HomePage() {
                 <label>Description :</label>
                 <br></br>
                 <input
-                  className="mt-2 w-75 "
+                  className="mt-2 w-100 "
                   type={"text"}
                   value={formDetails.description}
                   name="description"
@@ -202,20 +204,26 @@ function HomePage() {
                   placeholder="Description..."
                 />
                 <p className="text-danger">{errors.description}</p>
-                <label>Degree :</label>
-                <select
-                  className="mx-2  mt-2 w-50"
-                  value={formDetails.degree}
+                <label>Degree:</label>
+                <br></br>
+                <input
+                  className="mx-2 ms-5 mb-4"
+                  type={"checkbox"}
+                  value={"B.SC"}
+                  name="degree1"
                   onChange={onChange}
-                  name="degree"
-                >
-                  <option></option>
-                  <option>B.Sc</option>
-                  <option>B.E</option>
-                  <option>M.Sc</option>
-                  <option>M.E</option>
-                </select>
-                <p className="text-danger">{errors.degree}</p>
+                ></input>
+                <label className="me-5">B.Sc</label>
+                <input
+                  className="mx-2"
+                  type={"checkbox"}
+                  value={"M.Sc"}
+                  name="degree2"
+                  onChange={onChange}
+                ></input>
+                <label>M.Sc</label>
+                <br></br>
+                <p className="text-danger">{errors.degree1}</p>
                 <button className="submit" onClick={handleSubmit}>
                   Submit
                 </button>
@@ -224,8 +232,8 @@ function HomePage() {
                 </button>
               </form>
             </div>
-            {show ? (
-              <div className="col-md-8 py-5 text-center">
+            {/* {show ? (
+              <div className="col-md-8  text-center">
                 <h2>Stored Datas</h2>
                 {list.map((render) => (
                   <div>
@@ -239,13 +247,15 @@ function HomePage() {
                     <h5>Date of Birth:&nbsp;{render.date}</h5>
                     <h5>Age:&nbsp; {render.age}</h5>
                     <h5>Description:&nbsp; {render.description}</h5>
-                    <h5>Degree:&nbsp; {render.degree}</h5>
+                    <h5>
+                      Degree:&nbsp;{render.degree1} &nbsp; {render.degree2}
+                    </h5>
                   </div>
                 ))}
               </div>
             ) : (
               ""
-            )}
+            )} */}
           </div>
         </div>
       </div>
