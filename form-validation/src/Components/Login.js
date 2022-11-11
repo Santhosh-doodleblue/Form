@@ -5,14 +5,36 @@ import "./login.css";
 
 function Login() {
   let navigate = useNavigate();
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginDetails, setLoginDetails] = useState({
+    userName: "",
+    password: "",
+  });
+  const [error, setError] = useState({});
+
+  const handleChange = (e) => {
+    setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userName === "Santhosh" && password === "123") {
+    setError(handleErr(loginDetails));
+    if (
+      loginDetails.userName === "Santhosh" &&
+      loginDetails.password === "123"
+    ) {
       navigate("/home");
     }
+  };
+  const handleErr = (loginDetails) => {
+    let error = {};
+    if (loginDetails.userName !== "Santhosh") {
+      error.userName = "*Enter Valid Username";
+    }
+    if (loginDetails.password !== "123") {
+      error.password = "*Password is Incorrect";
+    }
+
+    return error;
   };
 
   return (
@@ -28,21 +50,23 @@ function Login() {
                 <input
                   className="my-3"
                   type={"text"}
+                  name="userName"
                   placeholder="Enter Your Username..."
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
+                  value={loginDetails.userName}
+                  onChange={handleChange}
                 />
-                <br></br>
+                <p className="text-danger">{error.userName}</p>
                 <label>Password</label>
                 <br></br>
                 <input
                   className="my-3"
                   type={"password"}
+                  name="password"
                   placeholder="Enter Your Password..."
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={loginDetails.password}
+                  onChange={handleChange}
                 />
-                <br></br>
+                <p className="text-danger">{error.password}</p>
                 <button
                   className="px-3 mx-5 mt-3 login-submit "
                   onClick={handleSubmit}

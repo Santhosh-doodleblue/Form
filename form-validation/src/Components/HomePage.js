@@ -1,69 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./home.css";
 function HomePage() {
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [gender, setGender] = useState("");
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [age, setAge] = useState("");
-  const [description, setDescription] = useState("");
-  const [degree, setDegree] = useState("");
+  const [formDetails, setFormDetails] = useState({
+    firstName: "",
+    lastName: "",
+    gender: "",
+    location: "",
+    date: "",
+    age: "",
+    description: "",
+    degree: "",
+  });
   const [list, setList] = useState([]);
   const [errors, setErrors] = useState({});
   const [show, setShow] = useState(false);
 
-  const Validation = () => {
+  const onChange = (e) => {
+    setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    console.log(errors);
+  });
+
+  const Validation = (formDetails) => {
     let errors = {};
     debugger;
 
-    if (fname === "") {
-      errors.fname = "*First Name Cannot be empty";
+    if (formDetails.firstName === "") {
+      errors.firstName = "*First Name Cannot be empty";
       setShow(false);
     } else {
       setShow(true);
     }
-    if (lname === "") {
-      errors.lname = "*Last Name Cannot be empty";
+    if (formDetails.lastName === "") {
+      errors.lastName = "*Last Name Cannot be empty";
       setShow(false);
     } else {
       setShow(true);
     }
 
-    if (gender === "") {
+    if (formDetails.gender === "") {
       errors.gender = "*Gender is Required";
       setShow(false);
     } else {
       setShow(true);
     }
 
-    if (location === "") {
+    if (formDetails.location === "") {
       errors.location = "*Location is Required";
       setShow(false);
     } else {
       setShow(true);
     }
 
-    if (date === "") {
+    if (formDetails.date === "") {
       errors.date = "*Birth date cannot be empty";
       setShow(false);
     } else {
       setShow(true);
     }
-    if (age === "") {
+    if (formDetails.age === "") {
       errors.age = "*Age is Required";
       setShow(false);
     } else {
       setShow(true);
     }
-    if (description === "") {
+    if (formDetails.description === "") {
       errors.description = "*Description is Required";
       setShow(false);
     } else {
       setShow(true);
     }
-    if (degree === "") {
+    if (formDetails.degree === "") {
       errors.degree = "*Degree is Required";
       setShow(false);
     } else {
@@ -77,32 +87,24 @@ function HomePage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(Validation());
-    const data = {
-      fname,
-      lname,
-      gender,
-      location,
-      date,
-      age,
-      description,
-      degree,
-    };
+    setErrors(Validation(formDetails));
 
-    setList((items) => [...items, data]);
+    setList((items) => [...items, formDetails]);
     console.log("datas", list);
   };
 
   const clear = (e) => {
     e.preventDefault();
-    setFname("");
-    setLname("");
-    setGender("");
-    setLocation("");
-    setDate("");
-    setAge("");
-    setDescription("");
-    setDegree("");
+    setFormDetails({
+      firstName: "",
+      lastName: "",
+      gender: "",
+      location: "",
+      date: "",
+      age: "",
+      description: "",
+      degree: "",
+    });
   };
 
   return (
@@ -110,7 +112,7 @@ function HomePage() {
       <div className="wrapper">
         <div className="container text-center">
           <div className="row">
-            <div className="col-lg-3 col-md-6  text-start  mt-5 ">
+            <div className="col-lg-4 col-md-6  text-start  mt-5 ">
               <h1 className="head text-white  ">Signup Form</h1>
               <form className="form ps-3 mb-4">
                 <label className="pt-3">First Name :</label>
@@ -118,21 +120,23 @@ function HomePage() {
                 <input
                   className="mt-2 w-75"
                   type={"text"}
-                  value={fname}
-                  onChange={(e) => setFname(e.target.value)}
+                  name="firstName"
+                  value={formDetails.firstName}
+                  onChange={onChange}
                   placeholder="First Name"
                 />
-                <p className="text-danger">{errors.fname}</p>
+                <p className="text-danger">{errors.firstName}</p>
                 <label>Last Name :</label>
                 <br></br>
                 <input
                   className="mt-2 w-75"
                   type={"text"}
-                  value={lname}
-                  onChange={(e) => setLname(e.target.value)}
+                  name="lastName"
+                  value={formDetails.lastName}
+                  onChange={onChange}
                   placeholder="Last Name"
                 />
-                <p className="text-danger">{errors.lname}</p>
+                <p className="text-danger">{errors.lastName}</p>
                 <label>Gender :</label>
                 <br></br>
                 <input
@@ -140,7 +144,7 @@ function HomePage() {
                   type={"radio"}
                   name="gender"
                   value={"Male"}
-                  onChange={(e) => setGender(e.target.value)}
+                  onChange={onChange}
                 />{" "}
                 <label for="Male">Male</label>
                 <input
@@ -148,14 +152,16 @@ function HomePage() {
                   type={"radio"}
                   name="gender"
                   value={"Female"}
-                  onChange={(e) => setGender(e.target.value)}
+                  onChange={onChange}
                 />
                 <label for="Female">Female</label>
                 <p className="text-danger">{errors.gender}</p>
                 <label>Location:</label>
                 <select
                   className="mx-2 mt-1 w-50"
-                  onChange={(e) => setLocation(e.target.value)}
+                  value={formDetails.location}
+                  onChange={onChange}
+                  name="location"
                 >
                   <option></option>
                   <option>Chennai</option>
@@ -169,8 +175,9 @@ function HomePage() {
                 <input
                   className="w-75 mt-2"
                   type={"date"}
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
+                  name="date"
+                  value={formDetails.date}
+                  onChange={onChange}
                 />
                 <p className="text-danger">{errors.date}</p>
                 <label>Age :</label>
@@ -178,8 +185,9 @@ function HomePage() {
                 <input
                   className="mt-2 w-75"
                   type={"number"}
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
+                  name="age"
+                  value={formDetails.age}
+                  onChange={onChange}
                   placeholder="Enter your Age"
                 />
                 <p className="text-danger">{errors.age}</p>
@@ -188,15 +196,18 @@ function HomePage() {
                 <input
                   className="mt-2 w-75 "
                   type={"text"}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={formDetails.description}
+                  name="description"
+                  onChange={onChange}
                   placeholder="Description..."
                 />
                 <p className="text-danger">{errors.description}</p>
                 <label>Degree :</label>
                 <select
                   className="mx-2  mt-2 w-50"
-                  onChange={(e) => setDegree(e.target.value)}
+                  value={formDetails.degree}
+                  onChange={onChange}
+                  name="degree"
                 >
                   <option></option>
                   <option>B.Sc</option>
@@ -214,13 +225,13 @@ function HomePage() {
               </form>
             </div>
             {show ? (
-              <div className="col-md-9 py-5 mt-5 text-center ">
+              <div className="col-md-8 py-5 text-center">
                 <h2>Stored Datas</h2>
                 {list.map((render) => (
                   <div>
                     <h5>
-                      Name: &nbsp;{render.fname}
-                      &nbsp;{render.lname}
+                      Name: &nbsp;{render.firstName}
+                      &nbsp;{render.lastName}
                     </h5>
 
                     <h5>Gender: &nbsp;{render.gender}</h5>
