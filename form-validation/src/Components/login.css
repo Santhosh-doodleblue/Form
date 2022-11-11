@@ -1,0 +1,20 @@
+.wrap {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #201e1e, #5c5b5b);
+}
+
+.login-submit {
+  width: 45%;
+  margin: 5px;
+  margin-bottom: 15px;
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  background-color: #383535;
+  color: #fff;
+}
+.login-submit:hover {
+  background-color: #7e7b7b;
+  transition: 0.5s;
+}
