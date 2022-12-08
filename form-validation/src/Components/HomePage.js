@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import "./home.css";
 function HomePage() {
   const [formDetails, setFormDetails] = useState({
